@@ -19,8 +19,9 @@ class CategorySeeder extends Seeder
                     'min_capacity'  => '0',
                     'max_capacity'  => 2,
                     'price'         => 1300,
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 ),
 
                 array(
@@ -29,8 +30,9 @@ class CategorySeeder extends Seeder
                     'min_capacity'  => '0',
                     'max_capacity'  => 18,
                     'price'         => 5500,
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 ),
 
                 array(
@@ -39,8 +41,9 @@ class CategorySeeder extends Seeder
                     'min_capacity'  => 8,
                     'max_capacity'  => 10,
                     'price'         => 4000,
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 ),
 
                 array(
@@ -49,8 +52,9 @@ class CategorySeeder extends Seeder
                     'min_capacity'  => 8,
                     'max_capacity'  => 10,
                     'price'         => 4500,
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 ),
 
                 array(
@@ -59,8 +63,9 @@ class CategorySeeder extends Seeder
                     'min_capacity'  => 9,
                     'max_capacity'  => 10,
                     'price'         => 4500,
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 )
             )
         );

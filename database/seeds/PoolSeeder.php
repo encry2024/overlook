@@ -19,8 +19,9 @@ class PoolSeeder extends Seeder
                     'price'         => 43.33,
                     'min_capacity'  => '70',
                     'max_capacity'  => '100',
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 ),
                 array(
                     'name'          => 'Lower Pool Cottage',
@@ -28,8 +29,9 @@ class PoolSeeder extends Seeder
                     'price'         => 20,
                     'min_capacity'  => '20',
                     'max_capacity'  => '30',
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 ),
                 array(
                     'name'          => 'Slide Pool Cottage',
@@ -37,8 +39,9 @@ class PoolSeeder extends Seeder
                     'price'         => 10,
                     'min_capacity'  => '20',
                     'max_capacity'  => '30',
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 ),
                 array(
                     'name'          => 'Open Cottage',
@@ -46,8 +49,9 @@ class PoolSeeder extends Seeder
                     'price'         => 10,
                     'min_capacity'  => '10',
                     'max_capacity'  => '20',
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'updated_at'    => date('Y-m-d H:i:s')
+                    'description'   => '',
+                    'created_at'    => date('Y-m-d h:i:s'),
+                    'updated_at'    => date('Y-m-d h:i:s')
                 )
             )
         );
