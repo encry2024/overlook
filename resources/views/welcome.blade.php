@@ -9,6 +9,8 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link href="/css/3xh4l3.css" rel="stylesheet">
+        <link href="/css/font-awesome-4.5.0/css/font-awesome.css" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -43,6 +45,13 @@
 
             .content {
                 text-align: center;
+                margin-top: 40rem;
+            }
+
+            .sub-content {
+                padding-left: 5%;
+                padding-right: 5%;
+                text-align: center !important;
             }
 
             .title {
@@ -75,16 +84,47 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    <img class="_31_0_31090" src="/pictures/OVERLOOK_LOGO2.png" alt=""> Overlook Resort
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a class="_c4_21 active" href="{{ url('/homepage') }}">Homepage</a>
+                    <a class="_c4_21" href="https://laracasts.com">Environment</a>
+                    <a class="_c4_21" href="https://laravel-news.com">Rooms</a>
+                    <a class="_c4_21" href="https://forge.laravel.com">Pools</a>
+                    <a class="_c4_21" href="https://github.com/laravel/laravel">Reservation</a>
                 </div>
+                <br><br>
+                <hr>
+
+                <br><br>
+                <div class="sub-content">
+                <i class="fa fa-users fa-5x"><br><span style="color: #F05A28;"> ENGAGE</span></i>
+                <br>
+                <p style="font-weight: 400 !important; font-family: 'Operator Mono'; margin-top: 2rem;">Interactive team building games designed to improve communication skills and other management skills in a fun way. Our event planners specialize in team building events and we can tailor an event that will take into account the participants ages and skill levels and help with the selection of the location for the event plus we will arrange to take you there.</p>
+                </div>
+
+                <br>
+                <hr>
+
+                <br><br>
+                <div class="sub-content">
+                    <i class="fa fa-rocket fa-5x"><br><span style="color: #F05A28;"> EXPLORE</span></i>
+                    <br>
+                    <p style="font-weight: 400 !important; font-family: 'Operator Mono'; margin-top: 2rem;">Private leisure resort that offers a wide variety of facilities which are designed for activities such as seminars, meetings and conferences; weddings, debuts, baptismals, parties, social gatherings and special events.</p>
+                </div>
+
+                <br>
+                <hr>
+
+                <br><br>
+                <div class="sub-content">
+                    <i class="fa fa-home fa-5x"><br><span style="color: #F05A28;"> EXPERIENCE</span></i>
+                    <br>
+                    <p style="font-weight: 400 !important; font-family: 'Operator Mono'; margin-top: 2rem;">Full service resort-hotel with 40 airconditioned guest rooms, two dorm style guest rooms, 3 functions rooms able to accommodate 50, 70 and 200 guests, 3 outdoor pools with adjoining patio and lounge, 3 videoke lounges, a garden and a parking lot.</p>
+                </div>
+
+                <br><br>
             </div>
         </div>
     </body>
