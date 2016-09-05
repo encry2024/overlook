@@ -8,7 +8,7 @@
             <div class="col-lg-9 col-md-8">
                 <div class="row">
                     <div class="panel panel-default">
-                        <div class="panel-heading" style="font-size: 22px;">DASHBOARD</div>
+                        <div class="panel-heading" style="font-size: 20px;">DASHBOARD</div>
                     </div>
                 </div>
 

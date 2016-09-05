@@ -5,9 +5,10 @@ a._c4_21:hover {
 }
 
 .active {
-    background-color: #F05A28 !important;
+    /*background-color: #F05A28 !important;*/
     color: white !important;
-    border-radius: 3px;
+    border-radius: 3px !important;
+    border-color: #F05A28 !important;
 }
 
 @media (max-width: 767px) {
@@ -32,3 +33,14 @@ a._c4_21:hover {
     }
 
 }
+
+@media (min-width: 1200px) {
+    .col-lg-push-0-2 {
+        right: 2.333333%;
+    }
+
+    .col-lg-push-2-7 {
+        left: 2.7333333%;
+    }
+}
+

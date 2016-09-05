@@ -26,7 +26,7 @@
     </script>
     <script src="{{ URL::to('/') }}/fullcalendar-2.4.0/moment.js"></script>
 
-
+    @include('layouts.header')
 </head>
 <body>
 
