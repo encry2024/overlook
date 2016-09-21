@@ -11,20 +11,18 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/3xh4l3.css" rel="stylesheet">
+    <link href="{{ URL::to('/') }}/css/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::to('/') }}/fullcalendar-2.4.0/fullcalendar.css">
     <link rel="stylesheet" href="{{ URL::to('/') }}/css/font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ URL::to('/') }}/js/brianreavis-selectize/dist/css/selectize.bootstrap3.css">
+    <link rel="stylesheet" href="{{ URL::to('/') }}/css/3xh4l3.css">
 
     <!-- Scripts -->
-
     <script src="{{ URL::to('/') }}/js/jquery.min.js"></script>
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
     <script src="{{ URL::to('/') }}/fullcalendar-2.4.0/moment.js"></script>
+    <script src="{{ URL::to('/') }}/js/bootstrap.js"></script>
+    <script src="{{ URL::to('/') }}/fullcalendar-2.4.0/fullcalendar.js"></script>
+    <script src="{{ URL::to('/') }}/js/brianreavis-selectize/dist/js/standalone/selectize.min.js"></script>
 
     @include('layouts.header')
 </head>
@@ -33,10 +31,10 @@
 
     @yield('content')
 
-    <!-- Scripts -->
-    <script src="{{ URL::to('/') }}/js/bootstrap.js"></script>
-    <script src="{{ URL::to('/') }}/fullcalendar-2.4.0/fullcalendar.js"></script>
-
-
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
 </body>
 </html>

@@ -84,7 +84,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <img class="_31_0_31090" src="/pictures/OVERLOOK_LOGO2.png" alt=""> Overlook Resort
+                    <img class="_31_0_31090" src="/pictures/OVERLOOK_LOGO2.png" alt="" style="width: 75%;"> Overlook Resort
                 </div>
 
                 <div class="links">

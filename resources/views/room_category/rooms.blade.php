@@ -5,15 +5,13 @@
     <div class="container">
         <div class="col-lg-12">
             <div class="row">
-                <div class="col-lg-3 col-lg-push-0-2">
-                    <div class="row">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Room</a>
-                            <a href="#" class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit</a>
-                            <a href="#" class="list-group-item"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload New Picture</a>
-                            <a href="#" class="list-group-item list-group-item-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete this Category</a>
-                            <a href="{{ route('room_category_index') }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
-                        </div>
+                <div class="col-lg-3">
+                    <div class="list-group">
+                        <a href="{{ route('create_room', $category->id) }}" class="list-group-item"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Room</a>
+                        <a href="#" class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit</a>
+                        <a href="#" class="list-group-item"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload New Picture</a>
+                        <a href="#" class="list-group-item list-group-item-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete this Category</a>
+                        <a href="{{ route('room_category_index') }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                     </div>
                 </div>
 
@@ -42,19 +40,19 @@
                                             <thead>
                                                 <th>#</th>
                                                 <th>Room Name</th>
-                                                <th>Status</th>
                                                 <th>Action</th>
                                             </thead>
 
                                             <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Room 101</td>
-                                                <td>Available</td>
-                                                <td>
-                                                    <a href="" class="btn btn-danger btn-sm">Delete</a>
-                                                </td>
-                                            </tr>
+                                                @foreach($category->rooms as $room)
+                                                <tr>
+                                                    <td>{{ $room->id }}</td>
+                                                    <td>{{ $room->name }}</td>
+                                                    <td>
+                                                        <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

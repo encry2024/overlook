@@ -15,7 +15,7 @@ class PoolSeeder extends Seeder
             array(
                 array(
                     'name'          => 'Upper Pool Cottage',
-                    'file_location' => '',
+                    'file_location' => '/pictures/pools/sp2.jpg',
                     'price'         => 43.33,
                     'min_capacity'  => '70',
                     'max_capacity'  => '100',
@@ -25,7 +25,7 @@ class PoolSeeder extends Seeder
                 ),
                 array(
                     'name'          => 'Lower Pool Cottage',
-                    'file_location' => '',
+                    'file_location' => '/pictures/pools/sp3 (1).jpg',
                     'price'         => 20,
                     'min_capacity'  => '20',
                     'max_capacity'  => '30',
@@ -35,7 +35,7 @@ class PoolSeeder extends Seeder
                 ),
                 array(
                     'name'          => 'Slide Pool Cottage',
-                    'file_location' => '',
+                    'file_location' => '/pictures/pools/night-pool.jpg',
                     'price'         => 10,
                     'min_capacity'  => '20',
                     'max_capacity'  => '30',
@@ -45,7 +45,7 @@ class PoolSeeder extends Seeder
                 ),
                 array(
                     'name'          => 'Open Cottage',
-                    'file_location' => '',
+                    'file_location' => '/pictures/pools/sp5.jpg',
                     'price'         => 10,
                     'min_capacity'  => '10',
                     'max_capacity'  => '20',

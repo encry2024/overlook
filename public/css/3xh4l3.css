@@ -1,46 +1,10 @@
-a._c4_21:hover {
-    background-color: #F05A28 !important;
-    color: white;
-    border-radius: 3px;
+/**/
+
+.description {
+    font-size: 13px;
 }
 
-.active {
-    /*background-color: #F05A28 !important;*/
-    color: white !important;
-    border-radius: 3px !important;
-    border-color: #F05A28 !important;
+.rsvr-cacncelled {
+    background-color: #f2dede;
+    color: #b52b27;
 }
-
-@media (max-width: 767px) {
-    ._31_0_31090 {
-        width: 100%;
-        margin-bottom: -1.5rem;
-        margin-top: 42rem;
-    }
-
-    ._c4_21 {
-        padding-top: 3px !important;
-        padding-right: 30.8% !important;
-        padding-left: 30.8% !important;
-        padding-bottom: 3px !important;
-    }
-}
-
-@media (min-width: 768px) {
-    ._31_0_31090 {
-        width: 20%;
-        margin-bottom: -1.5rem;
-    }
-
-}
-
-@media (min-width: 1200px) {
-    .col-lg-push-0-2 {
-        right: 2.333333%;
-    }
-
-    .col-lg-push-2-7 {
-        left: 2.7333333%;
-    }
-}
-

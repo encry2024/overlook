@@ -26,34 +26,43 @@
 
 <script>
     $(document).ready(function() {
+            $(".ui.dropdown").dropdown({
+                allowAdditions: true,
+            });
 
-        $('#calendar').fullCalendar({
-            selectable: false,
-            height: 500,
-            header: {
-                left: 'prev,next,today',
-                center: 'title',
-                right: 'month'
-            },
+            $('#calendar').fullCalendar({
+                selectable: false,
+                height: 550,
+                header: {
+                    left: 'prev,next,today',
+                    center: 'title',
+                    right: 'month'
+                },
 
-/*            select: function( start, end) {
-                var check = start.format();
-                var today = moment().format();
+                select: function( start, end) {
+                    var check = start.format();
+                    var today = moment().format();
 
-                if(check < today) {
-                } else {
+                    if(check < today) {
+                    } else {
+                        
+                    }
+                },
 
-                }
-            },
+                eventSources: [
+                    '{{ route('dashboardFetchReservedRooms') }}'
+                ],
 
-            eventClick: function(event) {
-                if (event.url) {
-                    window.open(event.url);
-                    return false;
-                }
-            },*/
-            editable: true
+                eventClick: function(event) {
+                    if (event.url) {
+                        window.open(event.url);
+                        return false;
+                    }
+                },
+                eventDurationEditable: true,
+                eventLimit: true,
+                editable: true
+            })
         });
-    });
 </script>
 @endsection
