@@ -12,6 +12,11 @@ class Room extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class, 'reservation_room');
+    }
     
     public static function postCreate($request, $category)
     {

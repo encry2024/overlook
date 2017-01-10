@@ -1,73 +1,92 @@
 @extends('layouts.app')
 
-
 @section('content')
-<div class="container">
-    <div class="col-lg-12">
-        <div class="row">
-            @include('layouts.sidebar')
-            <div class="col-lg-9 col-md-8">
+<div class="col-lg-12">
+    <div class="row">
+        @include('layouts.sidebar')
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="col-lg-12 col-md-9">
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading" style="font-size: 20px;">RESERVATIONS</div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-lg-12">
-                    <div class="row">
-                        <a href="{{ route('create_reservation') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;&nbsp;Make a Reservation</a>
-                    </div>
+            <div class="col-lg-12 col-md-9">
+                <div class="row">
+                    <a href="{{ route('create_reservation') }}" class="btn btn-success"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Book Walk-in Reservation</a>
+                </div>
 
-                    <br>
+                <br>
 
-                    <div class="row">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-lg-12">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table table-striped">
                                         <thead>
-                                            <th></th>
-                                            <th>Resrv. #</th>
-                                            <th>Name</th>
-                                            <th>Room</th>
-                                            <th>Reservation Date</th>
-                                            <th>Action</th>
+                                            <th style="width: 5%;"></th>
+                                            <th style="width: 15%;">Reservation #</th>
+                                            <th style="width: 20%;">Customer Name</th>
+                                            <th style="width: 17%;">Room #</th>
+                                            <th class="col-lg-2">Date Reserved</th>
+                                            <th style="width: 10%;">Status</th>
+                                            <th class="col-lg-3"></th>
                                         </thead>
 
                                         <tbody>
                                         @foreach($reservations as $reservation)
-                                            <tr class="{{ $reservation->status == 'CANCELLED' ? 'rsvr-cacncelled' : '' }}">
+                                            <tr>
                                                 <td>{{ ((($reservations->currentPage() - 1) * $reservations->perPage()) + ($ctr++) + 1) }}</td>
                                                 <td>{{ $reservation->reference_number }}</td>
                                                 <td>{{ $reservation->customer->name }}</td>
                                                 <td>
-                                                    @foreach($reservation->room as $rooms)
-                                                        {{ $rooms->name }}<br>
+                                                    @foreach($reservation->rooms as $room)
+                                                        {{ $room->name }}<br>
                                                     @endforeach
                                                 </td>
                                                 <td>
                                                     @foreach($reservation->reservation_room as $res_room)
-                                                        {{ $res_room->date_reserved }}<br>
+                                                        {{ date('F d, Y', strtotime($res_room->date_reserved)) }}<br>
                                                     @endforeach
                                                 </td>
-                                                @if ( $reservation->status == 'CHECKED-IN')
-                                                <td class="positive">Customer has already CHECKED-IN</td>
-                                                @elseif ( $reservation->status == 'CHECKED-OUT')
-                                                    <td class="positive">CHECKED-OUT</td>
-                                                @elseif ($reservation->status == 'CANCELLED')
-                                                    <td class="negative">CANCELLED</td>
-                                                @else
+                                                <td>
+                                                    {{ $reservation->status }}
+                                                    {{--@if ( $reservation->status == 'CHECKED-IN')
+                                                        <td class="positive">Customer has already CHECKED-IN</td>
+                                                    @elseif ( $reservation->status == 'CHECKED-OUT')
+                                                        <td class="positive">CHECKED-OUT</td>
+                                                    @elseif ($reservation->status == 'CANCELLED')
+                                                        <td class="negative">CANCELLED</td>
+                                                    @else
                                                     <td>
-                                                        <a class="btn btn-sm btn-success" href="{{ route('show_customer_billing', $reservation->id) }}">Process</a>
-                                                        <button class="btn btn-sm btn-danger" onclick="cancelReservation({{ $reservation->id }}, '{{ $reservation->reference_number }}')">Cancel</button>
+                                                        <a class="ui small positive button" href="{{ route('cust_billing', $reservation->id) }}">process</a>
+                                                        <button class="ui small negative button cancel_reservation_button" onclick="cancelReservation({{ $reservation->id }}, '{{ $reservation->reference_number }}')">cancel</button>
                                                     </td>
-                                                @endif
+                                                    @endif--}}
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            Actions
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                            <li><a href="#delivered" data-toggle="modal" data-target="#changeItemDeliveryStatus">View Details</a></li>
+                                                            <li><a href="#delivered" data-toggle="modal" data-target="#changeItemDeliveryStatus">Check in</a></li>
+                                                            <li><a href="#update_notification" data-toggle="modal" data-target="#updateNotifyMeForm">Check out</a></li>
+                                                            <li><a href="#delayed" data-toggle="modal" data-target="#updateDeliveryStatusForm"> Cancel Reservation</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
-                                    {!! $reservations->appends(['filter' => Request::get('filter')])->render() !!}
                                 </div>
+                            {!! $reservations->appends(['filter' => Request::get('filter')])->render() !!}
                             </div>
                         </div>
                     </div>

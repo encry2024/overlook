@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Category;
 use App\Room;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -38,5 +39,24 @@ class CategoryController extends Controller
         $post_create = Room::postCreate($request, $category);
 
         return $post_create;
+    }
+
+    public function updateCategory(UpdateCategoryRequest $updateCategoryRequest)
+    {
+        $updateCategory = Category::updateCategory($updateCategoryRequest);
+
+        return $updateCategory;
+    }
+
+    public function editCategory(Category $category)
+    {
+        return view('room_category.edit', compact('category'));
+    }
+
+    public function deleteCategory(Category $category)
+    {
+        if($category->delete()) {
+            return redirect()->route('room_category_index')->with('message', 'You have successfully deleted ' . $category->name . ' Category');
+        }
     }
 }

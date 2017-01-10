@@ -18,14 +18,14 @@ class Reservation extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function room()
+    public function rooms()
     {
         return $this->belongsToMany(Room::class, 'reservation_room');
     }
 
     public function reservation_room()
     {
-        return $this->hasMany(ReservationRoom::class)->orderBy('date_reserved');
+        return $this->hasMany(ReservationRoom::class);
     }
 
     public function getReservationId()
@@ -73,7 +73,6 @@ class Reservation extends Model
 
     public static function saveCustomerReservationDetails($data)
     {
-
         //dd($data->all());
         $getReferenceNumber = new Reservation();
         $rooms              = explode(',', $data->get('rooms'));

@@ -8,6 +8,9 @@ use App\Http\Requests;
 use App\Reservation;
 use App\Entrance;
 use App\Http\Requests\CreateReservationRequest;
+use App\ReservationRoom;
+use DB;
+use App\Room;
 
 class ReservationController extends Controller
 {
@@ -15,8 +18,9 @@ class ReservationController extends Controller
     public function index()
     {
         $ctr = 0;
-        $reservations = Reservation::latest()->paginate(25);
-        $reservations->setPath('reservation');
+        $reservations = Reservation::latest()->paginate(20);
+
+        $reservations->setPath('/reservations');
 
         return view('reservation.index', compact('reservations', 'ctr'));
     }

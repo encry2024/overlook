@@ -7,36 +7,34 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
         </div>
     @endif
-    <div class="container">
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-success" onclick='document.getElementById("createRoomForm").submit();'><i class="fa fa-check"></i>&nbsp;&nbsp;Create Room</a>
-                        <a href="#" class="list-group-item list-group-item-primary add_field_button" id="btnAdd"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Room</a>
-                        <a href="{{ route('show_room', $category->id) }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
-                    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-success" onclick='document.getElementById("createRoomForm").submit();'><i class="fa fa-check"></i>&nbsp;&nbsp;Create Room</a>
+                    <a href="#" class="list-group-item list-group-item-primary add_field_button" id="btnAdd"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Room</a>
+                    <a href="{{ route('show_room', $category->id) }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                 </div>
+            </div>
 
-                <div class="col-lg-9">
-                    <div class="row">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" style="font-size: 20px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add a Room</div>
-                            <div class="panel-body">
-                                <form class="form-horizontal" method="POST" id="createRoomForm" action="{{ route('post_room', $category->id) }}">
-                                    {{ csrf_field() }}
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="font-size: 20px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add a Room</div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="POST" id="createRoomForm" action="{{ route('post_room', $category->id) }}">
+                                {{ csrf_field() }}
 
-                                    <div class="input_fields_wrap">
-                                        <div class="form-group">
-                                            <label for="inputRoom" class="col-sm-3 control-label">Room Name/No#:</label>
-                                            <div class="col-sm-5">
-                                                <input name="name[]" class="form-control room_number" id="inputRoom" placeholder="Room #1">
-                                            </div>
+                                <div class="input_fields_wrap">
+                                    <div class="form-group">
+                                        <label for="inputRoom" class="col-sm-3 control-label">Room Name/No#:</label>
+                                        <div class="col-sm-5">
+                                            <input name="name[]" class="form-control room_number" id="inputRoom" placeholder="Room #1">
                                         </div>
                                     </div>
+                                </div>
 
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

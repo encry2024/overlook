@@ -25,30 +25,63 @@ Route::get('/homepage', function () {
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
+    # RESERVATIONS
     Route::get('/reservations', 'ReservationController@index')->name('reservations');
     Route::get('/reservations/create', 'ReservationController@create')->name('create_reservation');
 
-    Route::get('/room_categories', 'CategoryController@index')->name('room_category_index');
-    Route::get('/room_categories/{category}', 'CategoryController@show')->name('show_room');
-    Route::get('/room_categories/{category}/create', 'CategoryController@create')->name('create_room');
-    Route::post('/room_categories/{category}/create', 'CategoryController@postCreate')->name('post_room');
-    Route::get('/room_categories/{category}/rooms', 'CategoryController@showRooms')->name('rooms');
-    Route::get('/room_categories/{category}/room/create', 'CategoryController@createRoom')->name('create_room');
-    Route::get('getReservations', 'ReservationController@getReservationJson')->name('reserved_rooms');
+    # ROOMS
+    Route::get('categories', 'CategoryController@index')->name('room_category_index');
+    Route::get('category/{category}', 'CategoryController@show')->name('show_room');
+    Route::get('category/{category}/create', 'CategoryController@create')->name('create_room');
+    Route::post('category/{category}/create', 'CategoryController@postCreate')->name('post_room');
+    Route::get('category/{category}/rooms', 'CategoryController@showRooms')->name('rooms');
+    Route::get('category/{category}/room/create', 'CategoryController@createRoom')->name('create_room');
+    Route::get('/category/{room}/reserved', 'ReservationController@showReservedRoom')->name('show_reserved_room');
+    Route::patch('/category/{category}/update', 'CategoryController@updateCategory')->name('update_category');
+    Route::get('/category/{category}/edit', 'CategoryController@editCategory')->name('edit_category');
+    Route::delete('/category/{category}/delete', 'CategoryController@deleteCategory')->name('delete_category');
 
-    Route::get('/room/{room}/reserved', 'ReservationController@showReservedRoom')->name('show_reserved_room');
-
+    # CUSTOMER
     Route::get('/customer/{customer}/billing', 'CustomerController@showCustomerBilling')->name('show_customer_billing');
 
+    # POOLS
     Route::get('/pools', 'PoolController@index')->name('pool_index');
-    Route::post('/pool/{pool}/update', 'PoolController@updatePool')->name('pool_update');
+    Route::group(['prefix' => 'pool'], function() {
+        Route::patch('/{pool}/update', 'PoolController@updatePool')->name('pool_update');
+        Route::get('/{pool}', 'PoolController@showPool')->name('show_pool');
+        Route::get('/{pool}/edit', 'PoolController@editPool')->name('edit_pool');
+        Route::delete('/{pool}/delete', 'PoolController@deletePool')->name('delete_pool');
+    });
+
+    # AMENITIES
+    Route::get('/amenities', 'AmenityController@index')->name('amenity_index');
+    Route::group(['prefix' => 'amenity'], function() {
+        Route::get('/create', 'AmenityController@createAmenity')->name('create_amenity');
+        Route::post('/create', 'AmenityController@postAmenity')->name('post_amenity');
+        Route::get('/{amenity}', 'AmenityController@showAmenity')->name('show_amenity');
+        Route::get('/{amenity}/edit', 'AmenityController@editAmenity')->name('edit_amenity');
+        Route::patch('/{amenity}/update', 'AmenityController@updateAmenity')->name('update_amenity');
+        Route::delete('/{amenity}/delete', 'AmenityController@deleteAmenity')->name('delete_amenity');
+    });
+
+    # USERS
+    Route::get('/users', 'UserController@index')->name('user_index');
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('/{user}', 'UserController@show')->name('show_user');
+        Route::get('/create', 'UserController@create')->name('create_user');
+        Route::post('/create', 'UserController@postCreate')->name('post_create');
+        Route::get('/{user}/edit', 'UserController@edit')->name('edit_user');
+        Route::patch('/{user}/update', 'UserController@update')->name('update_user');
+        Route::delete('/{user}/delete', 'UserController@delete')->name('delete_user');
+    });
+
     /*
      * JSON REQUESTS
      * This section is for JSON requests only
      * */
-
     Route::get('/getRooms/{query}', 'RoomController@getRooms')->name('get_rooms');
     Route::get('create_reservation/{reservation_date}', 'ReservationController@createReservation')->name('reservation_date');
     Route::post('/save/customer_reservation', 'ReservationController@saveCustomerReservationDetails')->name('save_customer_reservation_details');
     Route::get('fetch_reserved_rooms', 'ReservationController@fetchReservedRooms')->name('dashboardFetchReservedRooms');
+    Route::get('getReservations', 'ReservationController@getReservationJson')->name('reserved_rooms');
 });
