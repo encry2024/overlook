@@ -30,6 +30,21 @@ class ReservationController extends Controller
         return view('reservation.create');
     }
 
+    public function show(Reservation $reservation)
+    {
+        return view('reservation.show', compact('reservation'));
+    }
+
+    public function edit(Reservation $reservation)
+    {
+        return view('reservation.edit', compact('reservation'));
+    }
+
+    public function update()
+    {
+        # code...
+    }
+
     public function createReservation($reservation_date)
     {
         $create_reservation = Reservation::createCustomerReservation($reservation_date);

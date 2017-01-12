@@ -9,21 +9,6 @@
     </div>
 </div>
 @endif
-@if (count($errors) > 0)
-<div class="col-lg-12">
-    <div class="alert alert-danger alert-dismissible">
-        <i class="close icon"></i>
-        <div class="header">
-            Category was not able to update because of the following reason(s)
-        </div>
-        <ul class="list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-</div>
-@endif
 <div class="col-lg-12">
     <div class="row">
         @include('layouts.sidebar')

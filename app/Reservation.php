@@ -28,6 +28,11 @@ class Reservation extends Model
         return $this->hasMany(ReservationRoom::class);
     }
 
+    public function entrance_type()
+    {
+        return $this->belongsTo(EntranceType::class, 'period');
+    }
+
     public function getReservationId()
     {
         $character_set_array   = array();

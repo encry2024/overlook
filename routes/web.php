@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -17,7 +18,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 Route::get('/homepage', function () {
     return view('welcome');
 });
@@ -28,6 +28,11 @@ Route::group(['middleware' => 'auth'], function() {
     # RESERVATIONS
     Route::get('/reservations', 'ReservationController@index')->name('reservations');
     Route::get('/reservations/create', 'ReservationController@create')->name('create_reservation');
+    Route::group(['prefix' => 'reservation'], function() {
+        Route::get('/{reservation}/details', 'ReservationController@show')->name('show_reservation');
+        Route::get('/{reservation}/edit', 'ReservationController@edit')->name('edit_reservation');
+        Route::patch('/{reservation}/update', 'ReservationController@update')->name('update_reservation');
+    });
 
     # ROOMS
     Route::get('categories', 'CategoryController@index')->name('room_category_index');
@@ -67,12 +72,23 @@ Route::group(['middleware' => 'auth'], function() {
     # USERS
     Route::get('/users', 'UserController@index')->name('user_index');
     Route::group(['prefix' => 'user'], function() {
-        Route::get('/{user}', 'UserController@show')->name('show_user');
         Route::get('/create', 'UserController@create')->name('create_user');
-        Route::post('/create', 'UserController@postCreate')->name('post_create');
+        Route::get('/{user}/profile', 'UserController@show')->name('show_user');
+        Route::post('/create', 'UserController@store')->name('post_create');
         Route::get('/{user}/edit', 'UserController@edit')->name('edit_user');
         Route::patch('/{user}/update', 'UserController@update')->name('update_user');
         Route::delete('/{user}/delete', 'UserController@delete')->name('delete_user');
+    });
+
+    # ENTRANCE
+    Route::get('/entrance_packages', 'EntranceController@index')->name('entrance_package_index');
+    Route::group(['prefix' => 'entrance'], function() {
+        Route::get('/create', 'EntranceController@create')->name('create_package_create');
+        Route::post('/store', 'EntranceController@store')->name('store_package');
+        Route::get('/package/{entrance}/', 'EntranceController@show')->name('show_package');
+        Route::get('/package/{entrance}/edit', 'EntranceController@edit')->name('edit_package');
+        Route::patch('/package/{entrance}/update', 'EntranceController@update')->name('update_package');
+        Route::delete('/package/{entrance}/delete', 'EntranceController@destroy')->name('delete_package');
     });
 
     /*
