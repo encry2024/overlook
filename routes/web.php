@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{reservation}/details', 'ReservationController@show')->name('show_reservation');
         Route::get('/{reservation}/edit', 'ReservationController@edit')->name('edit_reservation');
         Route::patch('/{reservation}/update', 'ReservationController@update')->name('update_reservation');
+        Route::get('/{reservation}/check-in', 'ReservationController@checkInReservation')->name('checkin_reservation');
     });
 
     # ROOMS

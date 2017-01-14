@@ -75,7 +75,7 @@
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                                             <li><a href="{{ route('show_reservation', $reservation->id) }}">View Details</a></li>
-                                                            <li><a href="#delivered" data-toggle="modal" data-target="#changeItemDeliveryStatus">Check in</a></li>
+                                                            <li><a href="{{ route('checkin_reservation', $reservation->id) }}" >Check in</a></li>
                                                             <li><a href="#update_notification" data-toggle="modal" data-target="#updateNotifyMeForm">Check out</a></li>
                                                             <li><a href="#delayed" data-toggle="modal" data-target="#updateDeliveryStatusForm"> Cancel Reservation</a></li>
                                                         </ul>

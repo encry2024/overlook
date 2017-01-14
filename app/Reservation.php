@@ -12,6 +12,7 @@ use Mail;
 class Reservation extends Model
 {
     //
+    protected $fillable = ['status', 'total_cost'];
 
     public function customer()
     {
@@ -33,6 +34,11 @@ class Reservation extends Model
         return $this->belongsTo(EntranceType::class, 'period');
     }
 
+    public function billing_reservation()
+    {
+        return $this->hasOne(BillingReservation::class);
+    }
+
     public function getReservationId()
     {
         $character_set_array   = array();
@@ -48,6 +54,53 @@ class Reservation extends Model
 
         shuffle($temp_array);
         return implode('', $temp_array);
+    }
+
+    public function getBillingId()
+    {
+        $character_set_array   = array();
+        $character_set_array[] = array('count' => 7, 'characters' => 'abcdefghijklmnopqrstuvwxyz');
+        $character_set_array[] = array('count' => 3, 'characters' => '0123456789');
+        $temp_array            = array();
+
+        foreach ($character_set_array as $character_set) {
+            for ($i = 0; $i < $character_set['count']; $i++) {
+                $temp_array[] = $character_set['characters'][rand(0, strlen($character_set['characters']) - 1)];
+            }
+        }
+
+        shuffle($temp_array);
+        return implode('', $temp_array);
+    }
+
+    public function getCustomerBill($reservation_id)
+    {
+        $reservation = Reservation::find($reservation_id);
+        $total_cost = 0;
+        $priceForAdult = 0;
+        $priceForChild = 0;
+
+        $entrance_type = EntranceType::find($reservation->period);
+
+        $entrance_rates = EntranceRate::whereEntranceTypeId($entrance_type->id)->get();
+
+        foreach ($entrance_rates as $value) {
+            if($value->name == "Adult") {
+                $priceForAdult = $value->price * $reservation->no_of_adult;
+            } elseif ($value->name == "Child") {
+                $priceForChild = $value->price * $reservation->no_of_child;
+            } elseif ($value->name == "70-100 pax") {
+                $total_cost = 70 * $value->price;
+            }
+        }
+
+        if($reservation->period == 4) {
+            $total_cost = 70 * $value->price;
+        } else {
+            $total_cost = $priceForChild + $priceForAdult;
+        }
+
+        return $total_cost;
     }
 
     public static function createCustomerReservation($reservation_date)
@@ -182,6 +235,83 @@ class Reservation extends Model
 
             return redirect()->back()->with('message', 'Reservation was successful. We sent your reservation reference in your e-mail');
 
+        }
+    }
+
+    public static function updateReservation($request, $reservation)
+    {
+        $billing_id   = $reservation->getBillingId();
+        $overallPayment = 0;
+
+        $getCustomerId = Reservation::find($reservation->id);
+
+        Reservation::find($reservation->id)->update([
+            'status' => 'CHECKED-IN'
+        ]);
+
+        $customer = Customer::find($getCustomerId->customer_id);
+
+        $billing_reservation = BillingReservation::whereReservationId($reservation->id)->first();
+
+        if(is_null($billing_reservation)) {
+            if ($request->has('discount_rate')) {
+                $discount = Discount::whereDeduction($request->get('discount_rate'))->first();
+
+                $deducted_cost = $reservation->getCustomerBill($reservation->id) * $discount->deduction;
+                $overallPayment = $reservation->getCustomerBill($reservation->id) - $deducted_cost;
+
+                $discount_reservation = new DiscountReservation();
+                $discount_reservation->discount_id = $discount->id;
+                $discount_reservation->reservation_id = $customer->id;
+                $discount_reservation->save();
+
+                $newbillingReservation                  = new BillingReservation();
+                $newbillingReservation->billing_reference = $billing_id;
+                $newbillingReservation->reservation_id    = $reservation->id;
+                $newbillingReservation->total_cost        = $overallPayment;
+
+                if($newbillingReservation->save()) {
+                    return redirect()->to(route('dashboard'))->with('message', 'Customer is now checked-in')
+                    ->with('alertIcon', 'check')->with('alertType', 'success');
+                } else {
+                    return redirect()->back()->with('message', 'Check-In proccess failed. Please check the reservation details')
+                    ->with('alertIcon', 'exclamation-triangle')->with('alertType', 'warning');
+                }
+            }
+        } else {
+            if ($request->has('discount_rate')) {
+                $discount = Discount::whereDeduction($request->get('discount_rate'))->first();
+
+                $deducted_cost = $reservation->getCustomerBill($reservation->id) * $discount->deduction;
+                $overallPayment = $reservation->getCustomerBill($reservation->id) - $deducted_cost;
+
+                $billing_reservation->update([
+                    'total_cost' => $overallPayment
+                ]);
+
+                return redirect()->to(route('dashboard'))->with('message', 'Customer is now checked-in')
+                ->with('alertIcon', 'check')->with('alertType', 'success');
+            }
+        }
+        $discount = Discount::whereDeduction(0)->first();
+
+        $deducted_cost = $reservation->getCustomerBill($reservation->id);
+
+        $discount_reservation = new DiscountReservation();
+        $discount_reservation->discount_id = $discount->id;
+        $discount_reservation->reservation_id = $customer->id;
+        $discount_reservation->save();
+
+        $billing_reservation->billing_reference = $billing_id;
+        $billing_reservation->reservation_id    = $reservation->id;
+        $billing_reservation->total_cost        = $deducted_cost;
+
+        if($billing_reservation->save()) {
+            return redirect()->to(route('dashboard'))->with('message', 'Customer is now checked-in')
+            ->with('alertIcon', 'check')->with('alertType', 'success');
+        } else {
+            return redirect()->back()->with('message', 'Check-In proccess failed. Please check the reservation details')
+            ->with('alertIcon', 'exclamation-triangle')->with('alertType', 'warning');
         }
     }
 

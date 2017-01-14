@@ -11,6 +11,7 @@ use App\Http\Requests\CreateReservationRequest;
 use App\ReservationRoom;
 use DB;
 use App\Room;
+use App\Discount;
 
 class ReservationController extends Controller
 {
@@ -40,9 +41,11 @@ class ReservationController extends Controller
         return view('reservation.edit', compact('reservation'));
     }
 
-    public function update()
+    public function update(Request $request, Reservation $reservation)
     {
-        # code...
+        $updateReservation = Reservation::updateReservation($request, $reservation);
+
+        return $updateReservation;
     }
 
     public function createReservation($reservation_date)
@@ -71,5 +74,11 @@ class ReservationController extends Controller
         $fetch_reserved_rooms = Reservation::fetchReservedRooms();
 
         return $fetch_reserved_rooms;
+    }
+
+    public function checkInReservation(Reservation $reservation)
+    {
+        $discounts = Discount::all();
+        return view('reservation.checkin', compact('reservation', 'discounts'));
     }
 }

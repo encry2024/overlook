@@ -7,7 +7,7 @@
         <div class="col-lg-3 col-md-3 col-sm-3">
             <div class="list-group">
                 <a href="{{ route('edit_reservation', $reservation->id) }}" class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit Reservation</a>
-                <a href="{{ route('edit_reservation', $reservation->id) }}" class="list-group-item"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;Check In</a>
+                <a href="{{ route('checkin_reservation', $reservation->id) }}" class="list-group-item"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;Check In</a>
                 <a href="{{ route('edit_reservation', $reservation->id) }}" class="list-group-item list-group-item-danger"><i class="fa fa-remove"></i>&nbsp;&nbsp;Cancel Reservation</a>
                 <a href="{{ route('reservations') }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
             </div>
@@ -15,13 +15,13 @@
         <div class="col-lg-9 col-md-9 col-sm-9">
             <div class="col-lg-12 col-md-9">
                 <div class="row">
-                    <div class="panel panel-default">
+                    <div class="panel panel-success">
                         <div class="panel-heading" style="font-size: 20px;">RESERVATION REFERENCE: {{ $reservation->reference_number }}</div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
