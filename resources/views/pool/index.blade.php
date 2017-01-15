@@ -38,11 +38,6 @@
             </div>
 
             <div class="col-lg-12">
-                 <div class="row">
-                    <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create Pool Category</a>
-                </div>
-
-                <br>
 
                 <div class="row">
                     <div class="panel panel-default">
@@ -84,7 +79,7 @@
                                         <div class="form-group">
                                             <label for="inputPrice" class="col-sm-3 control-label">Price per Head:</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="inputPrice" placeholder="Price per Room" value="{{ money_format('%n', $pool->price) }}" disabled>
+                                                <input class="form-control" id="inputPrice" placeholder="Price per Room" value="{{ number_format($pool->price, 2) }}" disabled>
                                             </div>
                                         </div>
 

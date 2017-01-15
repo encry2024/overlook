@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{reservation}/check-in', 'ReservationController@checkInReservation')->name('checkin_reservation');
         Route::patch('/{reservation}/cancel', 'ReservationController@cancelReservation')->name('cancel_reservation');
         Route::patch('/{reservation}/reopen', 'ReservationController@reopenReservation')->name('reopen_reservation');
+        Route::get('/{reservation}/check-out', 'ReservationController@checkOutReservation')->name('checkout_reservation');
+        Route::patch('/{reservation}/checkout', 'ReservationController@checkOutCustomer')->name('checkout_customer');
     });
 
     # ROOMS
@@ -72,7 +74,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{amenity}/edit', 'AmenityController@editAmenity')->name('edit_amenity');
         Route::patch('/{amenity}/update', 'AmenityController@updateAmenity')->name('update_amenity');
         Route::delete('/{amenity}/delete', 'AmenityController@deleteAmenity')->name('delete_amenity');
-        
+        Route::post('/{reservation}/purchase_amenity', 'AmenityController@purchaseAmenity')->name('purchase_amenity');
     });
 
     # USERS

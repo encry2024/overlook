@@ -69,7 +69,7 @@
                                         <div class="form-group">
                                             <label for="inputPrice" class="col-sm-3 control-label">Price:</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="inputPrice" placeholder="Price per Room" value="{{ money_format('%n', $category->price) }}" disabled>
+                                                <input class="form-control" id="inputPrice" placeholder="Price per Room" value="{{ number_format($category->price, 2) }}" disabled>
                                             </div>
                                         </div>
                                     </form>

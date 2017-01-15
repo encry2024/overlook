@@ -13,6 +13,9 @@ use App\ReservationRoom;
 use DB;
 use App\Room;
 use App\Discount;
+use App\AmenityReservation;
+use App\DiscountReservation;
+use App\BillingReservation;
 
 class ReservationController extends Controller
 {
@@ -34,7 +37,15 @@ class ReservationController extends Controller
 
     public function show(Reservation $reservation)
     {
-        return view('reservation.show', compact('reservation'));
+        $discountReservation = '';
+        $purchased_amenities = AmenityReservation::whereReservationId($reservation->id)->get();
+        $discount_reservation = DiscountReservation::where('reservation_id', $reservation->id)->first();
+
+        if(count($discount_reservation) == 0) {
+            $discountReservation = "NO-DISCOUNT";
+        }
+
+        return view('reservation.show', compact('reservation', 'purchased_amenities', 'discount_reservation', 'discountReservation'));
     }
 
     public function edit(Reservation $reservation)
@@ -95,5 +106,29 @@ class ReservationController extends Controller
         $reservation->update(['status' => 'RESERVED']);
 
         return redirect()->back()->with('message', 'Reservation ' . $reservation->reference_number . ' has been Reopened');
+    }
+
+    public function checkOutReservation(Reservation $reservation)
+    {
+        $discountReservation = '';
+        $purchased_amenities = AmenityReservation::whereReservationId($reservation->id)->get();
+        $discount_reservation = DiscountReservation::where('reservation_id', $reservation->id)->first();
+
+        if(count($discount_reservation) == 0) {
+            $discountReservation = "NO-DISCOUNT";
+        } else {
+            $discountReservation = "WITH-DISCOUNT";
+        }
+
+        return view('reservation.checkout', compact('reservation', 'purchased_amenities', 'discount_reservation', 'discountReservation'));
+    }
+
+    public function checkOutCustomer(Request $request, Reservation $reservation)
+    {
+        $billingReservation = BillingReservation::whereReservationId($reservation->id)->first();
+        $billingReservation->update(['total_cost' => $request->get('overall_payment')]);
+        $reservation->update(['status' => 'CHECKED-OUT']);
+
+        return redirect()->back()->with('message', 'Customer was successfully Checked-Out')->with('alertType', 'success')->with('alertIcon', 'check');
     }
 }

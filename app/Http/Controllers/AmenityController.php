@@ -58,9 +58,27 @@ class AmenityController extends Controller
 
     public function makeOrder()
     {
+        $ctr = 0;
         $reservations = Reservation::simplePaginate(50);
         $reservations->setPath('/reservations');
 
-        return view('amenity.order', compact('reservations'));
+        return view('amenity.order', compact('reservations', 'ctr'));
+    }
+
+    public function customerAddAmenity(Reservation $reservation)
+    {
+        $ctr = 0;
+        $amenities = Amenity::where('quantity', '!=', 0)->simplePaginate(30);
+        $amenities->setPath('/amenity/customer/1/order/amenities');
+
+        return view('amenity.create_order', compact('reservation', 'ctr', 'amenities'));
+    }
+
+    public function purchaseAmenity(Request $request, Reservation $reservation)
+    {
+        $reservation_id = $reservation->id;
+        $customerPurchaseAmenity = Amenity::purchaseAmenity($request, $reservation_id);
+
+        return $customerPurchaseAmenity;
     }
 }
