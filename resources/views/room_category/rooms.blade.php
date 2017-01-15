@@ -8,8 +8,7 @@
             <div class="list-group">
                 <a href="{{ route('create_room', $category->id) }}" class="list-group-item"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Room</a>
                 <a href="#" class="list-group-item"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit</a>
-                <a href="#" class="list-group-item"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload New Picture</a>
-                <a href="#" class="list-group-item list-group-item-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete this Category</a>
+                <a href="#delete_category" data-toggle="modal" data-target="#DeleteCategory" class="list-group-item list-group-item-danger"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete this Category</a>
                 <a href="{{ route('room_category_index') }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
             </div>
         </div>
@@ -62,4 +61,28 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="DeleteCategory">
+    <form class="form-horizontal" action="{{ route('delete_category', $category->id) }}" id="delete_category_form" method="POST">
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
+        <input type="hidden" name="category_id" id="category_id" value="{{ $category->id }}">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="category_title">Delete <b>{{ $category->name }}</b> Category</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="">Are you sure you want to delete <kbd>{{ $category->name }} Category</kbd></label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete Category</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div><!-- /.modal -->
 @stop
