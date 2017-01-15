@@ -161,7 +161,7 @@ class Reservation extends Model
         }
 
         if ($total_capacity < $total_person) {
-            return redirect()->back()->with('message', 'You have exceeded the max capacity of the room(s)')->with('alertIcon', 'exclamation-triangle')->with('alertType', 'danger');
+            return redirect()->back()->with('message', 'You have exceeded the max capacity of the room(s)')->with('alertIcon', 'exclamation-triangle')->with('alertType', 'danger')->with('alertColorHash', '#d9534f');
         } else {
             if (count($customer) == 0) {
                 $customer = new Customer();
@@ -208,7 +208,7 @@ class Reservation extends Model
                 });
 
                 return redirect()->back()->with('message', 'Reservation was successful. We sent your reservation reference in your e-mail')
-                    ->with('alertIcon', 'check')->with('alertType', 'success');
+                    ->with('alertIcon', 'check')->with('alertType', 'success')->with('alertColorHash', '#5cb85c');
             }
 
             $reservation                   = new Reservation();
@@ -246,7 +246,8 @@ class Reservation extends Model
                 $m->to($customer->email, $customer->full_name())->subject('Here\'s your RESERVATION ID');
             });
 
-            return redirect()->back()->with('message', 'Reservation was successful. We sent your reservation reference in your e-mail');
+            return redirect()->back()->with('message', 'Reservation was successful. We sent your reservation reference in your e-mail')
+            ->with('alertIcon', 'check')->with('alertType', 'success')->with('alertColorHash', '#5cb85c');
 
         }
     }

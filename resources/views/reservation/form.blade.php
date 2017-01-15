@@ -3,7 +3,7 @@
 @section('content')
 @if(Session::has('message'))
 <div class="col-lg-12">
-    <div class="alert alert-{{ Session::get('alertType') }} alert-dismissible" role="alert" style="background-color: #d9534f;">
+    <div class="alert alert-{{ Session::get('alertType') }} alert-dismissible" role="alert" style="background-color: {{ Session::get('alertColorHash') }};">
         <div class="container" style="color: white;"><i class="fa fa-{{ Session::get('alertIcon') }}"></i>&nbsp;&nbsp;{{ Session::get('message') }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
     </div>
