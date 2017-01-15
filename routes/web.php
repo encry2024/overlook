@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{reservation}/edit', 'ReservationController@edit')->name('edit_reservation');
         Route::patch('/{reservation}/update', 'ReservationController@update')->name('update_reservation');
         Route::get('/{reservation}/check-in', 'ReservationController@checkInReservation')->name('checkin_reservation');
+        Route::patch('/{reservation}/cancel', 'ReservationController@cancelReservation')->name('cancel_reservation');
+        Route::patch('/{reservation}/reopen', 'ReservationController@reopenReservation')->name('reopen_reservation');
     });
 
     # ROOMS
@@ -64,10 +66,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'amenity'], function() {
         Route::get('/create', 'AmenityController@createAmenity')->name('create_amenity');
         Route::post('/create', 'AmenityController@postAmenity')->name('post_amenity');
+        Route::get('/make-order/', 'AmenityController@makeOrder')->name('make_order');
+        Route::get('/customer/{reservation}/order/amenity', 'AmenityController@customerAddAmenity')->name('add_amenity');
         Route::get('/{amenity}', 'AmenityController@showAmenity')->name('show_amenity');
         Route::get('/{amenity}/edit', 'AmenityController@editAmenity')->name('edit_amenity');
         Route::patch('/{amenity}/update', 'AmenityController@updateAmenity')->name('update_amenity');
         Route::delete('/{amenity}/delete', 'AmenityController@deleteAmenity')->name('delete_amenity');
+        
     });
 
     # USERS

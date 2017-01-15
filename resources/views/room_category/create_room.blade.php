@@ -2,7 +2,7 @@
 
 @section('content')
     @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert" style="margin-top: -2.3rem;">
+        <div class="alert alert-success alert-dismissible" role="alert">
             <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
         </div>

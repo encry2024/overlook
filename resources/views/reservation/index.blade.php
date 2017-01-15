@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+@if(Session::has('message'))
+<div class="col-lg-12">
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <div class="container"><i class="fa fa-check"></i>&nbsp;&nbsp;{{ Session::get('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+    </div>
+</div>
+@endif
 <div class="col-lg-12">
     <div class="row">
         @include('layouts.sidebar')
@@ -27,13 +35,13 @@
                                 <div class="table-responsive">
                                     <table class="table table-striped">
                                         <thead>
-                                            <th style="width: 5%;"></th>
+                                            <th style="width: 5%;">#</th>
                                             <th style="width: 15%;">Reservation #</th>
                                             <th style="width: 20%;">Customer Name</th>
                                             <th style="width: 17%;">Room #</th>
                                             <th class="col-lg-2">Date Reserved</th>
                                             <th style="width: 10%;">Status</th>
-                                            <th class="col-lg-3"></th>
+                                            <th class="col-lg-3 text-right">Actions</th>
                                         </thead>
 
                                         <tbody>
@@ -53,31 +61,36 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    {{ $reservation->status }}
-                                                    {{--@if ( $reservation->status == 'CHECKED-IN')
-                                                        <td class="positive">Customer has already CHECKED-IN</td>
+                                                    
+                                                    @if ( $reservation->status == 'CHECKED-IN')
+                                                        <label style="font-size: 13px;" class="label label-success">{{ $reservation->status }}</label>
                                                     @elseif ( $reservation->status == 'CHECKED-OUT')
-                                                        <td class="positive">CHECKED-OUT</td>
+                                                        <label style="font-size: 13px;" class="label label-success">{{ $reservation->status }}</label>
                                                     @elseif ($reservation->status == 'CANCELLED')
-                                                        <td class="negative">CANCELLED</td>
+                                                        <label style="font-size: 13px;" class="label label-danger">{{ $reservation->status }}</label>
                                                     @else
-                                                    <td>
-                                                        <a class="ui small positive button" href="{{ route('cust_billing', $reservation->id) }}">process</a>
-                                                        <button class="ui small negative button cancel_reservation_button" onclick="cancelReservation({{ $reservation->id }}, '{{ $reservation->reference_number }}')">cancel</button>
-                                                    </td>
-                                                    @endif--}}
+                                                        <label style="font-size: 13px;" class="label label-info">{{ $reservation->status }}</label>
+                                                    @endif
                                                 </td>
-                                                <td>
+                                                <td class="pull-right">
                                                     <div class="dropdown">
-                                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                            Actions
-                                                            <span class="caret"></span>
+                                                        <button class="btn {{ $reservation->status == 'CANCELLED' ? 'btn-danger' : 'btn-default' }}  btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            @if($reservation->status != 'CANCELLED')
+                                                                Action
+                                                            @elseif($reservation->status == 'CANCELLED')
+                                                                Reservation Cancelled
+                                                            @endif
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                            @if($reservation->status != 'CANCELLED')
                                                             <li><a href="{{ route('show_reservation', $reservation->id) }}">View Details</a></li>
+                                                            <li><a href="{{ route('add_amenity', $reservation->id) }}">Add Amenity</a></li>
                                                             <li><a href="{{ route('checkin_reservation', $reservation->id) }}" >Check in</a></li>
                                                             <li><a href="#update_notification" data-toggle="modal" data-target="#updateNotifyMeForm">Check out</a></li>
-                                                            <li><a href="#delayed" data-toggle="modal" data-target="#updateDeliveryStatusForm"> Cancel Reservation</a></li>
+                                                            <li><a href="#cancel" onclick="cancelReservation({{ $reservation->id }})" data-toggle="modal" data-target="#cancelReservationModal"> Cancel Reservation</a></li>
+                                                            @elseif($reservation->status == 'CANCELLED')
+                                                                <li><a href="#re-open-reservation" onclick="reopenReservation({{ $reservation->id }})" data-toggle="modal" data-target="#reopenReservationModal">Re-Open Reservation</a></li>
+                                                            @endif
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -95,4 +108,65 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="cancelReservationModal">
+    <form method="POST" id="CancelReservationForm">
+        {{ csrf_field() }}
+        {{ method_field('PATCH') }}
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Cancel Reservation</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Are you sure you want to cancel this reservation?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Cancel Reservation</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="reopenReservationModal">
+    <form method="POST" id="ReopenReservationForm">
+        {{ csrf_field() }}
+        {{ method_field('PATCH') }}
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Reopen Reservation</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Are you sure you want to reopen this reservation?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Reopen Reservation</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+</div><!-- /.modal -->
+<script>
+    function cancelReservation(reservation_id) {
+        var url = '{{ route("cancel_reservation", ":reservationId") }}';
+            url = url.replace(":reservationId", reservation_id);
+
+        document.getElementById('CancelReservationForm').action = url;
+    }
+
+    function reopenReservation(reservation_id) {
+        var url = '{{ route("reopen_reservation", ":reservationId") }}';
+            url = url.replace(":reservationId", reservation_id);
+
+        document.getElementById('ReopenReservationForm').action = url;
+    }
+</script>
 @stop

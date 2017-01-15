@@ -24,7 +24,7 @@
             <div class="col-lg-12 col-md-9">
                 <div class="row">
                     <a href="{{ route('create_amenity') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Amenity</a>
-                    <a href="{{ route('create_amenity') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;&nbsp;Make an Order</a>
+                    <a href="{{ route('make_order') }}" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;&nbsp;Make an Order</a>
                 </div>
 
                 <br>

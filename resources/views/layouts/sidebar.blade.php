@@ -7,6 +7,5 @@
         <a href="{{ route('amenity_index') }}" class="list-group-item {{ Request::route()->getName() == 'amenity_index' ? 'active' : '' }}"><i class="fa fa-diamond"></i>&nbsp;&nbsp;Amenities</a>
         <a href="{{ route('entrance_package_index') }}" class="list-group-item {{ Request::route()->getName() == 'entrance_package_index' ? 'active' : '' }}"><i class="fa fa-money"></i>&nbsp;&nbsp;Entrance Packages/Rates & Types</a>
         <a href="{{ route('user_index') }}" class="list-group-item {{ Request::route()->getName() == 'user_index' ? 'active' : '' }}"><i class="fa fa-users"></i>&nbsp;&nbsp;Customers & Employees</a>
-        <a href="#" class="list-group-item"><i class="fa fa-briefcase"></i>&nbsp;&nbsp;Reports</a>
     </div>
 </div>

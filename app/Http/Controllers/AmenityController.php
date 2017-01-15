@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateAmenityRequest;
 use App\Http\Requests\UpdateAmenityRequest;
 use App\Amenity;
+use App\Reservation;
 
 class AmenityController extends Controller
 {
@@ -53,5 +54,13 @@ class AmenityController extends Controller
         if($amenity->delete()) {
             return redirect()->route('amenity_index')->with('message', 'You have successfully deleted amenity ' . $amenity->name);
         }
+    }
+
+    public function makeOrder()
+    {
+        $reservations = Reservation::simplePaginate(50);
+        $reservations->setPath('/reservations');
+
+        return view('amenity.order', compact('reservations'));
     }
 }

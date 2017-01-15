@@ -31,8 +31,8 @@
 
                 @if($reservation->status == 'CHECKED-IN')
                 <div class="row">
-                    <div class="alert alert-info" role="alert" style="padding-bottom: 2px;">
-                        <h4><i class="fa fa-pencil"></i> Note: <label style="font-size: 13.5px;">This reservation's status is already checked-in and you may update the customer's <i>Overall Payment</i> by changing his/her discount.</label></h4>
+                    <div class="alert alert-info" role="alert" style="padding-bottom: 0px; padding-top: 0px;">
+                        <h2 style="margin-top: 1rem;"><i class="fa fa-pencil"></i> Note: <label style="font-size: 13.5px;">This reservation's status is already checked-in and you may update the customer's <i>Overall Payment</i> by changing his/her discount.</label></h2>
                     </div>
                 </div>
                 @endif

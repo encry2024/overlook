@@ -31,8 +31,7 @@
             <div class="list-group">
                 <a href="#update_category" class="list-group-item list-group-item-success"
                 onclick="document.getElementById('UpdateCategoryForm').submit();"><i class="fa fa-check"></i>&nbsp;&nbsp;Update Category</a>
-                <a href="#" class="list-group-item"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload New Picture</a>
-                <a href="{{ route('room_category_index') }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+                <a href="{{ route('show_room', $category->id) }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
             </div>
         </div>
 

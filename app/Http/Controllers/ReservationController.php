@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Reservation;
 use App\Entrance;
 use App\Http\Requests\CreateReservationRequest;
+use App\Http\Requests\SaveCustomerReservationDetailsRequest;
 use App\ReservationRoom;
 use DB;
 use App\Room;
@@ -55,9 +56,9 @@ class ReservationController extends Controller
         return $create_reservation;
     }
 
-    public function saveCustomerReservationDetails(Request $data)
+    public function saveCustomerReservationDetails(Request $data, SaveCustomerReservationDetailsRequest $saveCustomerReservationDetailsRequest)
     {
-        $store_customer_reservation = Reservation::saveCustomerReservationDetails($data);
+        $store_customer_reservation = Reservation::saveCustomerReservationDetails($data, $saveCustomerReservationDetailsRequest);
 
         return $store_customer_reservation;
     }
@@ -80,5 +81,19 @@ class ReservationController extends Controller
     {
         $discounts = Discount::all();
         return view('reservation.checkin', compact('reservation', 'discounts'));
+    }
+
+    public function cancelReservation(Reservation $reservation)
+    {
+        $reservation->update(['status' => 'CANCELLED']);
+
+        return redirect()->back()->with('message', 'Reservation ' . $reservation->reference_number . ' has been cancelled');
+    }
+
+    public function reopenReservation(Reservation $reservation)
+    {
+        $reservation->update(['status' => 'RESERVED']);
+
+        return redirect()->back()->with('message', 'Reservation ' . $reservation->reference_number . ' has been Reopened');
     }
 }

@@ -8,17 +8,22 @@
                 <a href="{{ route('reservations') }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
             </div>
         </div>
+
         <div class="col-lg-9 col-md-8">
             <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="font-size: 20px;">BOOK RESERVATION</div>
+                <div class="col-lg-12 col-md-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="font-size: 20px;">BOOK RESERVATION</div>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div id="calendar"></div>
+                <div class="col-lg-12 col-md-9">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="calendar"></div>
+                        </div>
                     </div>
                 </div>
             </div>

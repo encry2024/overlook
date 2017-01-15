@@ -30,8 +30,7 @@
         <div class="col-lg-3">
             <div class="list-group">
                 <a href="#update_pool" class="list-group-item list-group-item-success" data-toggle="modal" data-target="#UpdatePoolModal"><i class="fa fa-check"></i>&nbsp;&nbsp;Update Pool </a>
-                <a href="#" class="list-group-item"><i class="fa fa-upload"></i>&nbsp;&nbsp;Upload New Picture</a>
-                <a href="{{ route('pool_index') }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
+                <a href="{{ route('show_pool', $pool->id) }}" class="list-group-item"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
             </div>
         </div>
 

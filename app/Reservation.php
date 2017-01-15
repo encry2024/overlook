@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Entrance;
 use App\Customer;
 use App\Category;
+use App\Room;
 use Mail;
 
 class Reservation extends Model
@@ -37,6 +38,11 @@ class Reservation extends Model
     public function billing_reservation()
     {
         return $this->hasOne(BillingReservation::class);
+    }
+
+    public function amenities()
+    {
+        return $this->hasMany(Amenity::class);
     }
 
     public function getReservationId()
@@ -105,6 +111,7 @@ class Reservation extends Model
 
     public static function createCustomerReservation($reservation_date)
     {
+        $rooms = Room::all();
         $packages = Entrance::all();
 
         $dates = explode('&', $reservation_date);
@@ -126,17 +133,17 @@ class Reservation extends Model
             $query->whereNotIn('id', $room_ids);
         }])->get();
 
-        return view('reservation.form', compact('start_date', 'end_date', 'categories', 'entrances', 'packages'));
+        return view('reservation.form', compact('start_date', 'end_date', 'categories', 'entrances', 'packages', 'rooms'));
     }
 
-    public static function saveCustomerReservationDetails($data)
+    public static function saveCustomerReservationDetails($data, $saveCustomerReservationDetailsRequest)
     {
         //dd($data->all());
         $getReferenceNumber = new Reservation();
-        $rooms              = explode(',', $data->get('rooms'));
-        $customer           = Customer::whereEmail($data->get('email'))->first();
+        $rooms              = explode(',', $saveCustomerReservationDetailsRequest->get('rooms'));
+        $customer           = Customer::whereEmail($saveCustomerReservationDetailsRequest->get('email'))->first();
         $total_capacity     = 0;
-        $total_person       = $data->get('no_of_adult') + $data->get('no_of_child');
+        $total_person       = $saveCustomerReservationDetailsRequest->get('no_of_adult') + $saveCustomerReservationDetailsRequest->get('no_of_child');
 
         foreach ((array) $rooms as $rm) {
             $rms = Room::find($rm);
@@ -149,22 +156,22 @@ class Reservation extends Model
         }
 
         if ($total_capacity < $total_person) {
-            return redirect()->back()->with('message', 'You exceeded the max capacity of the rooms');
+            return redirect()->back()->with('message', 'You have exceeded the max capacity of the room(s)')->with('alertIcon', 'exclamation-triangle')->with('alertType', 'danger');
         } else {
             if (count($customer) == 0) {
                 $customer = new Customer();
-                $customer->name = ucfirst(strtolower($data->get('first_name'))) . ' ' . ucfirst(strtolower($data->get('last_name')));
-                $customer->address = $data->get('address');
-                $customer->email = $data->get('email');
-                $customer->contact_number = $data->get('contact');
+                $customer->name = ucfirst(strtolower($saveCustomerReservationDetailsRequest->get('first_name'))) . ' ' . ucfirst(strtolower($saveCustomerReservationDetailsRequest->get('last_name')));
+                $customer->address = ucwords($saveCustomerReservationDetailsRequest->get('address'), ' ');
+                $customer->email = $saveCustomerReservationDetailsRequest->get('email');
+                $customer->contact_number = $saveCustomerReservationDetailsRequest->get('contact');
 
                 if ($customer->save()) {
                     $reservation = new Reservation();
                     $reservation->customer_id = $customer->id;
                     $reservation->reference_number = $getReferenceNumber->getReservationId();
-                    $reservation->no_of_child = $data->get('no_of_child');
-                    $reservation->no_of_adult = $data->get('no_of_adult');
-                    $reservation->period = $data->get('period');
+                    $reservation->no_of_child = $saveCustomerReservationDetailsRequest->get('no_of_child');
+                    $reservation->no_of_adult = $saveCustomerReservationDetailsRequest->get('no_of_adult');
+                    $reservation->period = $saveCustomerReservationDetailsRequest->get('period');
                     $reservation->status = 'RESERVED';
 
                     if ($reservation->save()) {
@@ -195,7 +202,8 @@ class Reservation extends Model
                     $m->to($customer->email, $customer->full_name())->subject('Here\'s your RESERVATION ID');
                 });
 
-                return redirect()->back()->with('message', 'Reservation was successful. We sent your reservation reference in your e-mail');
+                return redirect()->back()->with('message', 'Reservation was successful. We sent your reservation reference in your e-mail')
+                    ->with('alertIcon', 'check')->with('alertType', 'success');
             }
 
             $reservation                   = new Reservation();
