@@ -114,6 +114,13 @@
                                                             @endforeach
                                                             </tbody>
                                                             <?php $total = $total_child_price + $total_adult_price; ?>
+                                                            <?php 
+                                                                if($total == 0) {
+                                                                    $total = $total_per_pax;
+                                                                } else {
+                                                                    $total = number_format($total, 2);
+                                                                }
+                                                            ?>
                                                             <tfoot>
                                                             <tr>
                                                                 <td>Total Price</td>

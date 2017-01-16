@@ -279,7 +279,7 @@ class Reservation extends Model
                 $discount_reservation->reservation_id = $customer->id;
                 $discount_reservation->save();
 
-                $newbillingReservation                  = new BillingReservation();
+                $newbillingReservation                      = new BillingReservation();
                 $newbillingReservation->billing_reference = $billing_id;
                 $newbillingReservation->reservation_id    = $reservation->id;
                 $newbillingReservation->total_cost        = $overallPayment;
@@ -321,7 +321,7 @@ class Reservation extends Model
         $billing_reservation->total_cost        = $deducted_cost;
 
         if($billing_reservation->save()) {
-            return redirect()->to(route('dashboard'))->with('message', 'Customer is now checked-in')
+            return redirect()->to(route('dashboard'))->with('message', 'Customer is now checkeds-in')
             ->with('alertIcon', 'check')->with('alertType', 'success');
         } else {
             return redirect()->back()->with('message', 'Check-In proccess failed. Please check the reservation details')
